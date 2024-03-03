@@ -1,10 +1,12 @@
 import logo from "./logo.svg";
-import "./App.css";
+// import "./App.css";
 
 import { connect } from "react-redux";
 import { increaseCounter, decreaseCounter } from "./action/actions";
 // import store from "./redux/store";
 import axios from "axios";
+
+import Home from "./components/Home";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -32,29 +34,7 @@ function App(props) {
     useEffect(() => {
         fetchAllUser();
     }, []);
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>Hello world</p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-                <div>Count: {newCount}</div>
-
-                <button onClick={() => handleIncrease()}>Increase Count</button>
-
-                <button onClick={() => dispatch(decreaseCounter())}>
-                    Decrease Count
-                </button>
-            </header>
-        </div>
-    );
+    return <Home />;
 }
 
 // map state (redux store) + props react
