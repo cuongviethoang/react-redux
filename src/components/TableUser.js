@@ -1,17 +1,22 @@
 import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUser } from "../action/actions";
 const TableUser = () => {
-    const [listUser, setListUser] = useState([]);
-    const fetchAllUser = async () => {
-        const res = await axios.get("http://localhost:8080/api/v1/user/read");
-        const data = res && res.data ? res.data.DT : [];
-        setListUser(data);
-    };
+    const dispatch = useDispatch();
+    const listUsers = useSelector((state) => state.user.listUsers);
+
+    // const [listUser, setListUser] = useState([]);
+    // const fetchAllUser = async () => {
+    //     const res = await axios.get("http://localhost:8080/api/v1/user/read");
+    //     const data = res && res.data ? res.data.DT : [];
+    //     setListUser(data);
+    // };
 
     useEffect(() => {
-        fetchAllUser();
+        // fetchAllUser();
+        dispatch(fetchAllUser());
     }, []);
 
     const handleDeleteUser = (user) => {};
@@ -29,9 +34,9 @@ const TableUser = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {listUser &&
-                            listUser.length > 0 &&
-                            listUser.map((user, index) => (
+                        {listUsers &&
+                            listUsers.length > 0 &&
+                            listUsers.map((user, index) => (
                                 <tr key={`user-${index + 1}`}>
                                     <td>{index + 1}</td>
                                     <td>{user.email}</td>
