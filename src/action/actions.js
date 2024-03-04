@@ -6,6 +6,9 @@ import {
     FETCH_USER_REQUEST,
     FETCH_USER_SUCCESS,
     FETCH_USER_ERROR,
+    CREATE_USER_REQUEST,
+    CREATE_USER_SUCCESS,
+    CREATE_USER_ERROR,
 } from "./types";
 
 export const increaseCounter = () => {
@@ -53,5 +56,42 @@ const fetchUserSuccess = (payload) => {
 const fetchUserError = () => {
     return {
         type: FETCH_USER_ERROR,
+    };
+};
+
+const createUserRequest = () => {
+    return {
+        type: CREATE_USER_REQUEST,
+    };
+};
+
+const createUserSuccess = () => {
+    return {
+        type: CREATE_USER_SUCCESS,
+    };
+};
+
+const createUserError = () => {
+    return {
+        type: CREATE_USER_ERROR,
+    };
+};
+
+export const createNewUserRedux = (email, phone, password, username) => {
+    return async (dispatch, getState) => {
+        dispatch(createUserRequest());
+        try {
+            let res = await axios.post(
+                "http://localhost:8080/api/v1/user/create",
+                { email, phone, password, username }
+            );
+            if (res && res.data && +res.data.EC === 0) {
+                dispatch(createUserSuccess());
+                dispatch(fetchAllUser());
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(createUserError());
+        }
     };
 };
