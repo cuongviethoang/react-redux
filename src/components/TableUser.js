@@ -33,13 +33,13 @@ const TableUser = () => {
                     <tbody>
                         {isError === true ? (
                             <>
-                                <div>Something wrongs, please try again...</div>
+                                <tr>Something wrongs, please try again...</tr>
                             </>
                         ) : (
                             <>
                                 {isLoading === true ? (
                                     <>
-                                        <div>Loading data...</div>
+                                        <tr>Loading data...</tr>
                                     </>
                                 ) : (
                                     <>
