@@ -2,18 +2,21 @@ import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllUser } from "../action/actions";
+import { fetchAllUser, deleteUserRedux } from "../action/actions";
 const TableUser = () => {
     const dispatch = useDispatch();
     const listUsers = useSelector((state) => state.user.listUsers);
     const isLoading = useSelector((state) => state.user.isLoading);
     const isError = useSelector((state) => state.user.isError);
-
+    const isDeleting = useSelector((state) => state.user.isDeleting);
     useEffect(() => {
         dispatch(fetchAllUser());
     }, []);
 
-    const handleDeleteUser = (user) => {};
+    const handleDeleteUser = (user) => {
+        console.log(">> check user: ", user);
+        dispatch(deleteUserRedux(user?.id));
+    };
     return (
         <>
             <Container>
@@ -54,6 +57,9 @@ const TableUser = () => {
                                                                 handleDeleteUser(
                                                                     user
                                                                 )
+                                                            }
+                                                            disabled={
+                                                                isDeleting
                                                             }
                                                         >
                                                             Delete

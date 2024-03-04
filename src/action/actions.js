@@ -9,6 +9,9 @@ import {
     CREATE_USER_REQUEST,
     CREATE_USER_SUCCESS,
     CREATE_USER_ERROR,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_ERROR,
 } from "./types";
 
 export const increaseCounter = () => {
@@ -93,5 +96,44 @@ export const createNewUserRedux = (email, phone, password, username) => {
             console.log(e);
             dispatch(createUserError());
         }
+    };
+};
+
+export const deleteUserRedux = (id) => {
+    return async (dispatch, getState) => {
+        dispatch(deleteUserRequest());
+        try {
+            let res = await axios.delete(
+                "http://localhost:8080/api/v1/user/delete",
+                {
+                    data: {
+                        id: id,
+                    },
+                }
+            );
+            if (res && res.data && +res.data.EC === 0) {
+                dispatch(deleteUserSuccess());
+                dispatch(fetchAllUser());
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(deleteUserError());
+        }
+    };
+};
+
+const deleteUserRequest = () => {
+    return {
+        type: DELETE_USER_REQUEST,
+    };
+};
+const deleteUserSuccess = () => {
+    return {
+        type: DELETE_USER_SUCCESS,
+    };
+};
+const deleteUserError = () => {
+    return {
+        type: DELETE_USER_ERROR,
     };
 };
